@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+      }
+
+      .testimonials-container {
+        max-width: 900px;
+        margin: 50px auto;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .testimonials-cards {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        margin: 0 -15px; /* Add negative margin to compensate for individual card margins */
+      }
+
+      .card {
+        flex: 0 0 30%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        padding: 20px;
+        text-align: left;
+        margin: 0 15px; /* Add margin between cards */
+      }
+
+      .navigation-icons {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+      }
+
+      .icon {
+        cursor: pointer;
+        font-size: 24px;
+        color: #333;
+      }
+    </style>
+    <div class="testimonials-container">
+      <div class="testimonials-cards">
+        <div class="card">
+          <p>
+            Testimonial 1: Lorem ipsum dolor sit amet, consectetur adipiscing
+            elit.
+          </p>
+        </div>
+        <div class="card">
+          <p>
+            Testimonial 2: Sed do eiusmod tempor incididunt ut labore et dolore
+            magna aliqua.
+          </p>
+        </div>
+        <div class="card">
+          <p>
+            Testimonial 3: Ut enim ad minim veniam, quis nostrud exercitation
+            ullamco laboris.
+          </p>
+        </div>
+      </div>
+
+      <div class="navigation-icons">
+        <div class="icon" onclick="prevTestimonial()">&#8249;</div>
+        <div class="icon" onclick="nextTestimonial()">&#8250;</div>
+      </div>
+    </div>
+
+    <script>
+      let currentIndex = 0;
+
+      function showTestimonials(index) {
+        const testimonials = document.querySelector(".testimonials-cards");
+        testimonials.style.transform = `translateX(-${index * 30}%)`;
+
+        if (index === testimonials.childElementCount - 1) {
+          setTimeout(() => {
+            testimonials.style.transition = "none";
+            currentIndex = 0;
+            testimonials.style.transform = `translateX(-${currentIndex * 30}%)`;
+            setTimeout(() => {
+              testimonials.style.transition = "";
+            }, 0);
+          }, 500); // Set the timeout value equal to your transition duration
+        }
+      }
+
+      function nextTestimonial() {
+        const totalTestimonials = document.querySelectorAll(".card").length;
+        currentIndex = (currentIndex + 1) % (totalTestimonials + 1); // Add 1 for the last transition
+        showTestimonials(currentIndex);
+      }
+
+      function prevTestimonial() {
+        const totalTestimonials = document.querySelectorAll(".card").length;
+        currentIndex =
+          (currentIndex - 1 + totalTestimonials + 1) % (totalTestimonials + 1);
+        showTestimonials(currentIndex);
+      }
+    </script>
+  </body>
+</html>
